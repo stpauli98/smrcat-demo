@@ -13,7 +13,9 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 export const EMBED_MODEL = "text-embedding-3-small";
-export const CHAT_MODEL = "claude-sonnet-4-5";
+// Najjeftiniji Claude 4.x model (~4× jeftinije od Sonnet-a) — dovoljno za RAG demo.
+// Za production sa kompleksnijim pitanjima razmotri "claude-sonnet-4-6".
+export const CHAT_MODEL = "claude-haiku-4-5";
 export const TOP_K = 5;
 export const TEMPERATURE = 0.3;
 
