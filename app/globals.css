@@ -2,26 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Smrčak brand */
+    --forest: 121 39% 27%;
+    --moss: 83 38% 56%;
+    --cream: 43 35% 93%;
+    --earth: 26 51% 27%;
+
+    /* Status */
+    --success: 165 70% 37%;
+    --warning: 31 78% 41%;
+    --danger: 0 58% 41%;
+    --info: 212 75% 37%;
+    --neutral: 0 0% 42%;
+
+    /* shadcn mapping → Smrčak */
+    --background: 43 35% 93%;        /* cream */
+    --foreground: 0 0% 10%;          /* dark text */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+    --primary: 121 39% 27%;          /* forest */
+    --primary-foreground: 43 35% 98%;
+    --secondary: 43 35% 88%;
+    --secondary-foreground: 0 0% 10%;
+    --muted: 43 30% 90%;
+    --muted-foreground: 0 0% 42%;
+    --accent: 83 38% 56%;            /* moss */
+    --accent-foreground: 0 0% 10%;
+    --destructive: 0 58% 41%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 40 24% 87%;
+    --input: 40 24% 87%;
+    --ring: 121 39% 27%;
+    --radius: 0.5rem;
   }
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-serif;
   }
 }

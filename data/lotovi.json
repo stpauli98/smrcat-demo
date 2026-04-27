@@ -1,0 +1,122 @@
+[
+  {
+    "id": "SV-2026-014",
+    "proizvod": "Sušeni vrganji klasa A",
+    "kooperant_id": "karakaj-7",
+    "datum_otkupa": "2026-04-12",
+    "kolicina_ulaz": 350,
+    "kolicina_ostatak": 50
+  },
+  {
+    "id": "SV-2026-018",
+    "proizvod": "Sušeni vrganji klasa A",
+    "kooperant_id": "bratunac-3",
+    "datum_otkupa": "2026-04-14",
+    "kolicina_ulaz": 280,
+    "kolicina_ostatak": 80
+  },
+  {
+    "id": "SL-2026-007",
+    "proizvod": "Sušene lisičarke",
+    "kooperant_id": "srebrenica-12",
+    "datum_otkupa": "2026-03-28",
+    "kolicina_ulaz": 180,
+    "kolicina_ostatak": 30
+  },
+  {
+    "id": "SV-2025-067",
+    "proizvod": "Sušeni vrganji klasa A",
+    "kooperant_id": "karakaj-7",
+    "datum_otkupa": "2025-09-12",
+    "kolicina_ulaz": 400,
+    "kolicina_ostatak": 0
+  },
+  {
+    "id": "SV-2026-009",
+    "proizvod": "Sušeni vrganji klasa A",
+    "kooperant_id": "vlasenica-1",
+    "datum_otkupa": "2026-04-02",
+    "kolicina_ulaz": 220,
+    "kolicina_ostatak": 110
+  },
+  {
+    "id": "SL-2026-011",
+    "proizvod": "Sušene lisičarke",
+    "kooperant_id": "han-pijesak-5",
+    "datum_otkupa": "2026-04-05",
+    "kolicina_ulaz": 160,
+    "kolicina_ostatak": 90
+  },
+  {
+    "id": "SL-2025-088",
+    "proizvod": "Sušene lisičarke",
+    "kooperant_id": "olovo-4",
+    "datum_otkupa": "2025-10-04",
+    "kolicina_ulaz": 200,
+    "kolicina_ostatak": 0
+  },
+  {
+    "id": "SV-2026-021",
+    "proizvod": "Sušeni vrganji klasa A",
+    "kooperant_id": "olovo-4",
+    "datum_otkupa": "2026-04-18",
+    "kolicina_ulaz": 300,
+    "kolicina_ostatak": 200
+  },
+  {
+    "id": "MX-2026-003",
+    "proizvod": "Miks gljiva",
+    "kooperant_id": "han-kola-2",
+    "datum_otkupa": "2026-03-22",
+    "kolicina_ulaz": 90,
+    "kolicina_ostatak": 40
+  },
+  {
+    "id": "SV-2026-005",
+    "proizvod": "Sušeni vrganji klasa A",
+    "kooperant_id": "han-kola-2",
+    "datum_otkupa": "2026-03-30",
+    "kolicina_ulaz": 250,
+    "kolicina_ostatak": 0
+  },
+  {
+    "id": "SL-2026-014",
+    "proizvod": "Sušene lisičarke",
+    "kooperant_id": "vlasenica-1",
+    "datum_otkupa": "2026-04-09",
+    "kolicina_ulaz": 140,
+    "kolicina_ostatak": 60
+  },
+  {
+    "id": "MX-2025-019",
+    "proizvod": "Miks gljiva",
+    "kooperant_id": "sokolac-8",
+    "datum_otkupa": "2025-11-16",
+    "kolicina_ulaz": 110,
+    "kolicina_ostatak": 0
+  },
+  {
+    "id": "SV-2025-091",
+    "proizvod": "Sušeni vrganji klasa A",
+    "kooperant_id": "bratunac-3",
+    "datum_otkupa": "2025-10-18",
+    "kolicina_ulaz": 320,
+    "kolicina_ostatak": 0
+  },
+  {
+    "id": "SV-2026-002",
+    "proizvod": "Sušeni vrganji klasa A",
+    "kooperant_id": "srebrenica-12",
+    "datum_otkupa": "2026-03-16",
+    "kolicina_ulaz": 180,
+    "kolicina_ostatak": 0
+  },
+  {
+    "id": "MX-2026-007",
+    "proizvod": "Miks gljiva",
+    "kooperant_id": "han-pijesak-5",
+    "datum_otkupa": "2026-04-08",
+    "kolicina_ulaz": 80,
+    "kolicina_ostatak": 50
+  }
+]

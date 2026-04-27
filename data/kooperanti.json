@@ -1,0 +1,74 @@
+[
+  {
+    "id": "karakaj-7",
+    "ime_lokacije": "Karakaj 7",
+    "ime_osobe": "Mehmedović Sefer",
+    "lat": 44.32,
+    "lng": 19.10,
+    "biosuisse_validan_do": "2027-08-31",
+    "status": "aktivan"
+  },
+  {
+    "id": "bratunac-3",
+    "ime_lokacije": "Bratunac 3",
+    "ime_osobe": "Petrović Milan",
+    "lat": 44.18,
+    "lng": 19.32,
+    "biosuisse_validan_do": "2026-11-15",
+    "status": "aktivan"
+  },
+  {
+    "id": "srebrenica-12",
+    "ime_lokacije": "Srebrenica 12",
+    "ime_osobe": "Hadžić Adnan",
+    "lat": 44.10,
+    "lng": 19.30,
+    "biosuisse_validan_do": "2027-05-20",
+    "status": "aktivan"
+  },
+  {
+    "id": "vlasenica-1",
+    "ime_lokacije": "Vlasenica 1",
+    "ime_osobe": "Kovačević Branka",
+    "lat": 44.18,
+    "lng": 18.94,
+    "biosuisse_validan_do": "2026-09-30",
+    "status": "aktivan"
+  },
+  {
+    "id": "han-pijesak-5",
+    "ime_lokacije": "Han Pijesak 5",
+    "ime_osobe": "Đurić Slobodan",
+    "lat": 44.07,
+    "lng": 18.95,
+    "biosuisse_validan_do": "2027-03-12",
+    "status": "aktivan"
+  },
+  {
+    "id": "sokolac-8",
+    "ime_lokacije": "Sokolac 8",
+    "ime_osobe": "Tadić Mihajlo",
+    "lat": 43.94,
+    "lng": 18.80,
+    "biosuisse_validan_do": "2025-12-31",
+    "status": "obnova u toku"
+  },
+  {
+    "id": "olovo-4",
+    "ime_lokacije": "Olovo 4",
+    "ime_osobe": "Begić Hasan",
+    "lat": 44.13,
+    "lng": 18.58,
+    "biosuisse_validan_do": "2027-06-18",
+    "status": "aktivan"
+  },
+  {
+    "id": "han-kola-2",
+    "ime_lokacije": "Han Kola 2",
+    "ime_osobe": "Janković Stevan",
+    "lat": 44.08,
+    "lng": 19.20,
+    "biosuisse_validan_do": "2026-10-25",
+    "status": "aktivan"
+  }
+]

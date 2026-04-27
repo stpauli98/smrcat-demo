@@ -1,0 +1,640 @@
+[
+  {
+    "id": "2026-0143",
+    "broj": "2026/0143",
+    "kupac_id": "bio-naturkost",
+    "datum_kreiranja": "2026-04-25",
+    "datum_otpreme": "2026-05-02",
+    "status": "Spremno za otpremu",
+    "vrijednost": 18500,
+    "valuta": "EUR",
+    "ukupna_kg": 500,
+    "proizvodi": [
+      {
+        "proizvod": "Sušeni vrganji klasa A",
+        "kolicina": 500,
+        "jedinicna_cijena": 37,
+        "lot_ids": ["SV-2026-014", "SV-2026-018"]
+      }
+    ],
+    "prevoznik": "Cargo Express",
+    "ruta": "Zvornik → München",
+    "napomene": "Kupac preferira pakovanje 5kg vreće. Avans 30% naplaćen.",
+    "dokumenti": [
+      {
+        "id": "2026-0143-komercijalna-faktura-de",
+        "posiljka_id": "2026-0143",
+        "tip": "komercijalna_faktura",
+        "ime": "Komercijalna faktura DE",
+        "jezik": "DE",
+        "status": "Čeka pregled",
+        "generisao": "AI agent",
+        "generisano_u": "2026-04-25T09:14:00",
+        "pdf_path": "/sample-docs/komercijalna_faktura_de.pdf",
+        "ai_polja": {
+          "broj_fakture": "2026/0143",
+          "datum": "25.04.2026",
+          "kupac": "Bio Naturkost GmbH",
+          "iznos": "18.500,00 €",
+          "kolicina_kg": 500
+        }
+      },
+      {
+        "id": "2026-0143-packing-list",
+        "posiljka_id": "2026-0143",
+        "tip": "packing_list",
+        "ime": "Packing list DE/EN",
+        "jezik": "DE/EN",
+        "status": "Čeka pregled",
+        "generisao": "AI agent",
+        "generisano_u": "2026-04-25T09:14:30",
+        "pdf_path": "/sample-docs/packing_list.pdf",
+        "ai_polja": {
+          "broj_fakture": "2026/0143",
+          "ukupno_paketa": 100,
+          "tezina_kg": 500
+        }
+      },
+      {
+        "id": "2026-0143-cmr",
+        "posiljka_id": "2026-0143",
+        "tip": "cmr",
+        "ime": "CMR transport dokument",
+        "jezik": "DE",
+        "status": "Čeka pregled",
+        "generisao": "AI agent",
+        "generisano_u": "2026-04-25T09:14:45",
+        "pdf_path": "/sample-docs/cmr.pdf",
+        "ai_polja": {
+          "prevoznik": "Cargo Express",
+          "registracija": "BG-127-AT",
+          "ruta": "Zvornik → München"
+        }
+      },
+      {
+        "id": "2026-0143-eur1",
+        "posiljka_id": "2026-0143",
+        "tip": "eur1",
+        "ime": "EUR.1 povlašteno porijeklo",
+        "jezik": "DE",
+        "status": "Čeka pregled",
+        "generisao": "AI agent",
+        "generisano_u": "2026-04-25T09:15:00",
+        "pdf_path": "/sample-docs/eur1.pdf",
+        "ai_polja": {
+          "porijeklo": "Bosna i Hercegovina",
+          "destinacija": "Njemačka"
+        }
+      },
+      {
+        "id": "2026-0143-biosuisse",
+        "posiljka_id": "2026-0143",
+        "tip": "biosuisse_organic",
+        "ime": "BioSuisse organic prateći",
+        "jezik": "DE",
+        "status": "Odobreno",
+        "generisao": "AI agent",
+        "generisano_u": "2026-04-25T09:15:15",
+        "pdf_path": "/sample-docs/biosuisse_organic.pdf",
+        "ai_polja": {
+          "kooperanti": "Karakaj 7, Bratunac 3"
+        }
+      },
+      {
+        "id": "2026-0143-izvozna-deklaracija",
+        "posiljka_id": "2026-0143",
+        "tip": "izvozna_deklaracija",
+        "ime": "Izvozna carinska deklaracija",
+        "jezik": "BCS",
+        "status": "Čeka pregled",
+        "generisao": "AI agent",
+        "generisano_u": "2026-04-25T09:15:30",
+        "pdf_path": "/sample-docs/izvozna_deklaracija.pdf",
+        "ai_polja": {
+          "carinski_broj": "2026/IZ/0143"
+        }
+      },
+      {
+        "id": "2026-0143-fitosanitarni",
+        "posiljka_id": "2026-0143",
+        "tip": "fitosanitarni",
+        "ime": "Fitosanitarni certifikat",
+        "jezik": "DE",
+        "status": "Upload",
+        "generisao": "Spoljni dokument",
+        "generisano_u": "2026-04-25T09:15:45",
+        "pdf_path": null
+      },
+      {
+        "id": "2026-0143-komorski",
+        "posiljka_id": "2026-0143",
+        "tip": "komorski_certifikat",
+        "ime": "Komorski certifikat o porijeklu",
+        "jezik": "BCS",
+        "status": "Upload",
+        "generisao": "Spoljni dokument",
+        "generisano_u": "2026-04-25T09:16:00",
+        "pdf_path": null
+      }
+    ],
+    "audit_events": [
+      {
+        "id": "ev-0143-1",
+        "posiljka_id": "2026-0143",
+        "vrijeme": "2026-04-25T09:13:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "kreirano",
+        "opis": "Pošiljka kreirana iz emaila Bio Naturkost"
+      },
+      {
+        "id": "ev-0143-2",
+        "posiljka_id": "2026-0143",
+        "vrijeme": "2026-04-25T09:15:30",
+        "autor": "AI agent",
+        "tip": "generisano",
+        "opis": "Generisano 6 dokumenata, 2 spoljna čekaju upload"
+      },
+      {
+        "id": "ev-0143-3",
+        "posiljka_id": "2026-0143",
+        "vrijeme": "2026-04-25T09:18:45",
+        "autor": "Ljubiša Danojlović",
+        "tip": "odobreno",
+        "opis": "BioSuisse organic prateći odobren"
+      }
+    ]
+  },
+  {
+    "id": "2026-0156",
+    "broj": "2026/0156",
+    "kupac_id": "muenchen-bio",
+    "datum_kreiranja": "2026-04-20",
+    "datum_otpreme": "2026-04-24",
+    "status": "U tranzitu",
+    "vrijednost": 4200,
+    "valuta": "EUR",
+    "ukupna_kg": 100,
+    "proizvodi": [
+      {
+        "proizvod": "Sušene lisičarke",
+        "kolicina": 100,
+        "jedinicna_cijena": 42,
+        "lot_ids": ["SL-2026-007"]
+      }
+    ],
+    "prevoznik": "Cargo Express",
+    "ruta": "Zvornik → München",
+    "napomene": "URGENT: container na njemačkoj carini čeka fitosanitarni certifikat.",
+    "dokumenti": [
+      {
+        "id": "2026-0156-komercijalna-faktura-de",
+        "posiljka_id": "2026-0156",
+        "tip": "komercijalna_faktura",
+        "ime": "Komercijalna faktura DE",
+        "jezik": "DE",
+        "status": "Odobreno",
+        "generisao": "AI agent",
+        "generisano_u": "2026-04-20T11:02:00",
+        "pdf_path": "/sample-docs/komercijalna_faktura_de.pdf"
+      },
+      {
+        "id": "2026-0156-packing-list",
+        "posiljka_id": "2026-0156",
+        "tip": "packing_list",
+        "ime": "Packing list DE/EN",
+        "jezik": "DE/EN",
+        "status": "Odobreno",
+        "generisao": "AI agent",
+        "generisano_u": "2026-04-20T11:02:30",
+        "pdf_path": "/sample-docs/packing_list.pdf"
+      },
+      {
+        "id": "2026-0156-cmr",
+        "posiljka_id": "2026-0156",
+        "tip": "cmr",
+        "ime": "CMR transport dokument",
+        "jezik": "DE",
+        "status": "Odobreno",
+        "generisao": "AI agent",
+        "generisano_u": "2026-04-20T11:02:45",
+        "pdf_path": "/sample-docs/cmr.pdf"
+      },
+      {
+        "id": "2026-0156-fitosanitarni",
+        "posiljka_id": "2026-0156",
+        "tip": "fitosanitarni",
+        "ime": "Fitosanitarni certifikat",
+        "jezik": "DE",
+        "status": "Odobreno",
+        "generisao": "AI agent",
+        "generisano_u": "2026-04-20T11:03:00",
+        "pdf_path": "/sample-docs/fitosanitarni.pdf",
+        "ai_polja": {
+          "broj_certifikata": "FS-2026-0156",
+          "datum_izdavanja": "20.04.2026",
+          "destinacija": "DE"
+        }
+      }
+    ],
+    "audit_events": [
+      {
+        "id": "ev-0156-1",
+        "posiljka_id": "2026-0156",
+        "vrijeme": "2026-04-20T10:30:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "kreirano",
+        "opis": "Pošiljka kreirana iz narudžbe München Bio"
+      },
+      {
+        "id": "ev-0156-2",
+        "posiljka_id": "2026-0156",
+        "vrijeme": "2026-04-20T11:03:00",
+        "autor": "AI agent",
+        "tip": "generisano",
+        "opis": "Generisano 4 dokumenta uključujući fitosanitarni"
+      },
+      {
+        "id": "ev-0156-3",
+        "posiljka_id": "2026-0156",
+        "vrijeme": "2026-04-20T14:20:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "poslano",
+        "opis": "Paket otpremljen kupcu i prevozniku"
+      }
+    ]
+  },
+  {
+    "id": "2026-0142",
+    "broj": "2026/0142",
+    "kupac_id": "bio-naturkost",
+    "datum_kreiranja": "2026-04-15",
+    "datum_otpreme": "2026-04-20",
+    "status": "Reklamacija",
+    "vrijednost": 18500,
+    "valuta": "EUR",
+    "ukupna_kg": 500,
+    "proizvodi": [
+      {
+        "proizvod": "Sušeni vrganji klasa A",
+        "kolicina": 500,
+        "jedinicna_cijena": 37,
+        "lot_ids": ["SV-2026-009"]
+      }
+    ],
+    "prevoznik": "Cargo Express",
+    "ruta": "Zvornik → München",
+    "napomene": "Kupac prijavio oštećenja vlagom (~30% robe). U obradi reklamacija.",
+    "dokumenti": [
+      {
+        "id": "2026-0142-komercijalna-faktura-de",
+        "posiljka_id": "2026-0142",
+        "tip": "komercijalna_faktura",
+        "ime": "Komercijalna faktura DE",
+        "jezik": "DE",
+        "status": "Odobreno",
+        "generisao": "AI agent",
+        "generisano_u": "2026-04-15T08:40:00",
+        "pdf_path": "/sample-docs/komercijalna_faktura_de.pdf"
+      },
+      {
+        "id": "2026-0142-packing-list",
+        "posiljka_id": "2026-0142",
+        "tip": "packing_list",
+        "ime": "Packing list DE/EN",
+        "jezik": "DE/EN",
+        "status": "Odobreno",
+        "generisao": "AI agent",
+        "generisano_u": "2026-04-15T08:40:30",
+        "pdf_path": "/sample-docs/packing_list.pdf"
+      }
+    ],
+    "audit_events": [
+      {
+        "id": "ev-0142-1",
+        "posiljka_id": "2026-0142",
+        "vrijeme": "2026-04-15T08:30:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "kreirano",
+        "opis": "Pošiljka kreirana"
+      },
+      {
+        "id": "ev-0142-2",
+        "posiljka_id": "2026-0142",
+        "vrijeme": "2026-04-15T16:00:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "poslano",
+        "opis": "Paket otpremljen Bio Naturkost"
+      },
+      {
+        "id": "ev-0142-3",
+        "posiljka_id": "2026-0142",
+        "vrijeme": "2026-04-23T10:15:00",
+        "autor": "Bio Naturkost",
+        "tip": "primljeno",
+        "opis": "Reklamacija: ~30% oštećenja vlagom"
+      }
+    ]
+  },
+  {
+    "id": "2026-0140",
+    "broj": "2026/0140",
+    "kupac_id": "funghi-del-bosco",
+    "datum_kreiranja": "2026-04-10",
+    "datum_otpreme": "2026-04-14",
+    "status": "Završeno",
+    "vrijednost": 8400,
+    "valuta": "EUR",
+    "ukupna_kg": 200,
+    "proizvodi": [
+      {
+        "proizvod": "Sušene lisičarke",
+        "kolicina": 200,
+        "jedinicna_cijena": 42,
+        "lot_ids": ["SL-2025-088"]
+      }
+    ],
+    "prevoznik": "Cargo Express",
+    "ruta": "Zvornik → Milano",
+    "napomene": "Standardna pošiljka, sve uredno.",
+    "dokumenti": [],
+    "audit_events": [
+      {
+        "id": "ev-0140-1",
+        "posiljka_id": "2026-0140",
+        "vrijeme": "2026-04-10T09:00:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "kreirano",
+        "opis": "Pošiljka kreirana"
+      },
+      {
+        "id": "ev-0140-2",
+        "posiljka_id": "2026-0140",
+        "vrijeme": "2026-04-14T11:00:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "poslano",
+        "opis": "Paket otpremljen u Milano"
+      }
+    ]
+  },
+  {
+    "id": "2026-0138",
+    "broj": "2026/0138",
+    "kupac_id": "gourmet-vienna",
+    "datum_kreiranja": "2026-04-08",
+    "datum_otpreme": "2026-04-15",
+    "status": "Čeka spoljni upload",
+    "vrijednost": 2100,
+    "valuta": "EUR",
+    "ukupna_kg": 50,
+    "proizvodi": [
+      {
+        "proizvod": "Miks gljiva",
+        "kolicina": 50,
+        "jedinicna_cijena": 42,
+        "lot_ids": ["MX-2026-003"]
+      }
+    ],
+    "prevoznik": "Balkan Kurir",
+    "ruta": "Zvornik → Wien",
+    "napomene": "Čeka komorski certifikat o porijeklu.",
+    "dokumenti": [],
+    "audit_events": [
+      {
+        "id": "ev-0138-1",
+        "posiljka_id": "2026-0138",
+        "vrijeme": "2026-04-08T10:00:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "kreirano",
+        "opis": "Pošiljka kreirana"
+      }
+    ]
+  },
+  {
+    "id": "2026-0135",
+    "broj": "2026/0135",
+    "kupac_id": "sarajevo-delikatesa",
+    "datum_kreiranja": "2026-04-05",
+    "datum_otpreme": "2026-04-12",
+    "status": "Završeno",
+    "vrijednost": 6500,
+    "valuta": "BAM",
+    "ukupna_kg": 100,
+    "proizvodi": [
+      {
+        "proizvod": "Sušeni vrganji klasa A",
+        "kolicina": 100,
+        "jedinicna_cijena": 65,
+        "lot_ids": ["SV-2026-005"]
+      }
+    ],
+    "prevoznik": "Balkan Kurir",
+    "ruta": "Zvornik → Sarajevo",
+    "napomene": "Domaća isporuka.",
+    "dokumenti": [],
+    "audit_events": [
+      {
+        "id": "ev-0135-1",
+        "posiljka_id": "2026-0135",
+        "vrijeme": "2026-04-05T09:00:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "kreirano",
+        "opis": "Pošiljka kreirana"
+      },
+      {
+        "id": "ev-0135-2",
+        "posiljka_id": "2026-0135",
+        "vrijeme": "2026-04-12T10:30:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "poslano",
+        "opis": "Paket otpremljen Sarajevo Delikatesa"
+      }
+    ]
+  },
+  {
+    "id": "2026-0130",
+    "broj": "2026/0130",
+    "kupac_id": "italian-exports",
+    "datum_kreiranja": "2026-03-25",
+    "datum_otpreme": "2026-04-02",
+    "status": "Završeno",
+    "vrijednost": 12500,
+    "valuta": "EUR",
+    "ukupna_kg": 300,
+    "proizvodi": [
+      {
+        "proizvod": "Sušeni vrganji klasa A",
+        "kolicina": 300,
+        "jedinicna_cijena": 42,
+        "lot_ids": ["SV-2025-091"]
+      }
+    ],
+    "prevoznik": "Cargo Express",
+    "ruta": "Zvornik → Bologna",
+    "napomene": "EUR.1 certifikat aplikovan.",
+    "dokumenti": [],
+    "audit_events": [
+      {
+        "id": "ev-0130-1",
+        "posiljka_id": "2026-0130",
+        "vrijeme": "2026-03-25T08:00:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "kreirano",
+        "opis": "Pošiljka kreirana"
+      },
+      {
+        "id": "ev-0130-2",
+        "posiljka_id": "2026-0130",
+        "vrijeme": "2026-04-02T11:00:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "poslano",
+        "opis": "Paket otpremljen u Bologna"
+      }
+    ]
+  },
+  {
+    "id": "2025-0089",
+    "broj": "2025/0089",
+    "kupac_id": "suisse-bio",
+    "datum_kreiranja": "2025-09-15",
+    "datum_otpreme": "2025-09-22",
+    "status": "Završeno",
+    "vrijednost": 14000,
+    "valuta": "CHF",
+    "ukupna_kg": 300,
+    "proizvodi": [
+      {
+        "proizvod": "Sušeni vrganji klasa A",
+        "kolicina": 300,
+        "jedinicna_cijena": 47,
+        "lot_ids": ["SV-2025-067"]
+      }
+    ],
+    "prevoznik": "Cargo Express",
+    "ruta": "Zvornik → Genève",
+    "napomene": "BioSuisse audit trag uredan, kompletna sledljivost.",
+    "dokumenti": [
+      {
+        "id": "2025-0089-biosuisse",
+        "posiljka_id": "2025-0089",
+        "tip": "biosuisse_organic",
+        "ime": "BioSuisse organic prateći",
+        "jezik": "DE",
+        "status": "Odobreno",
+        "generisao": "AI agent",
+        "generisano_u": "2025-09-15T10:00:00",
+        "pdf_path": "/sample-docs/biosuisse_organic.pdf"
+      },
+      {
+        "id": "2025-0089-eur1",
+        "posiljka_id": "2025-0089",
+        "tip": "eur1",
+        "ime": "EUR.1 povlašteno porijeklo",
+        "jezik": "DE",
+        "status": "Odobreno",
+        "generisao": "AI agent",
+        "generisano_u": "2025-09-15T10:01:00",
+        "pdf_path": "/sample-docs/eur1.pdf"
+      }
+    ],
+    "audit_events": [
+      {
+        "id": "ev-2025-0089-1",
+        "posiljka_id": "2025-0089",
+        "vrijeme": "2025-09-15T08:00:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "kreirano",
+        "opis": "Pošiljka kreirana"
+      },
+      {
+        "id": "ev-2025-0089-2",
+        "posiljka_id": "2025-0089",
+        "vrijeme": "2025-09-15T10:01:30",
+        "autor": "AI agent",
+        "tip": "generisano",
+        "opis": "Generisano 5 dokumenata uključujući BioSuisse prateći"
+      },
+      {
+        "id": "ev-2025-0089-3",
+        "posiljka_id": "2025-0089",
+        "vrijeme": "2025-09-22T09:00:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "poslano",
+        "opis": "Paket otpremljen u Genève"
+      }
+    ]
+  },
+  {
+    "id": "2025-0067",
+    "broj": "2025/0067",
+    "kupac_id": "berlin-vital",
+    "datum_kreiranja": "2025-08-20",
+    "datum_otpreme": "2025-08-28",
+    "status": "Završeno",
+    "vrijednost": 11000,
+    "valuta": "EUR",
+    "ukupna_kg": 250,
+    "proizvodi": [
+      {
+        "proizvod": "Miks gljiva",
+        "kolicina": 250,
+        "jedinicna_cijena": 44,
+        "lot_ids": ["MX-2025-019"]
+      }
+    ],
+    "prevoznik": "Cargo Express",
+    "ruta": "Zvornik → Berlin",
+    "napomene": "Standardna pošiljka.",
+    "dokumenti": [],
+    "audit_events": [
+      {
+        "id": "ev-2025-0067-1",
+        "posiljka_id": "2025-0067",
+        "vrijeme": "2025-08-20T10:00:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "kreirano",
+        "opis": "Pošiljka kreirana"
+      },
+      {
+        "id": "ev-2025-0067-2",
+        "posiljka_id": "2025-0067",
+        "vrijeme": "2025-08-28T12:00:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "poslano",
+        "opis": "Paket otpremljen u Berlin"
+      }
+    ]
+  },
+  {
+    "id": "2026-0145",
+    "broj": "2026/0145",
+    "kupac_id": "pariser-mushrooms",
+    "datum_kreiranja": "2026-04-26",
+    "datum_otpreme": "2026-05-04",
+    "status": "Draft",
+    "vrijednost": 3200,
+    "valuta": "EUR",
+    "ukupna_kg": 80,
+    "proizvodi": [
+      {
+        "proizvod": "Sušeni vrganji klasa A",
+        "kolicina": 80,
+        "jedinicna_cijena": 40,
+        "lot_ids": ["SV-2026-021"]
+      }
+    ],
+    "prevoznik": "Cargo Express",
+    "ruta": "Zvornik → Paris",
+    "napomene": "Novi kupac. Avans 50% nije naplaćen.",
+    "dokumenti": [],
+    "audit_events": [
+      {
+        "id": "ev-0145-1",
+        "posiljka_id": "2026-0145",
+        "vrijeme": "2026-04-26T14:00:00",
+        "autor": "Ljubiša Danojlović",
+        "tip": "kreirano",
+        "opis": "Draft pošiljke"
+      }
+    ]
+  }
+]
