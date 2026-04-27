@@ -4,6 +4,7 @@ import "./globals.css";
 import { TopNav } from "@/components/layout/TopNav";
 import { Footer } from "@/components/layout/Footer";
 import { StoreInit } from "@/components/StoreInit";
+import { FloatingChatbot } from "@/components/chatbot/FloatingChatbot";
 import { cn } from "@/lib/utils";
 
 const sourceSerif = Source_Serif_4({
@@ -45,6 +46,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <FloatingChatbot />
       </body>
     </html>
   );
