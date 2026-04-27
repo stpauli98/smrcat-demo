@@ -77,15 +77,33 @@ export async function embedQuery(
   return r.data[0].embedding;
 }
 
+export type ChatScope = "biznis" | "app" | "all";
+
+export const APP_DOC_FILE = "uputstvo_aplikacije.md";
+
+/**
+ * Pretvara user-vidljivi mode u Pinecone metadata filter.
+ * - biznis: isključi uputstvo aplikacije (samo poslovna pitanja)
+ * - app: samo uputstvo aplikacije (samo pitanja o korištenju softvera)
+ * - all: bez filtera (default kad korisnik kuca slobodno)
+ */
+export function buildScopeFilter(scope: ChatScope) {
+  if (scope === "biznis") return { source: { $ne: APP_DOC_FILE } };
+  if (scope === "app") return { source: { $eq: APP_DOC_FILE } };
+  return undefined;
+}
+
 export async function searchTopK(
   index: ReturnType<Pinecone["index"]>,
   vector: number[],
   topK = TOP_K,
+  filter?: Record<string, unknown>,
 ): Promise<RagSource[]> {
   const result = await index.query({
     vector,
     topK,
     includeMetadata: true,
+    ...(filter ? { filter } : {}),
   });
   return (result.matches ?? [])
     .filter((m) => m.metadata)

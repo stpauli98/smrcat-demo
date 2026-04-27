@@ -7,12 +7,26 @@ import { MessageBubble } from "./MessageBubble";
 import { useChatStream } from "./useChatStream";
 import { cn } from "@/lib/utils";
 
-const QUICK_QUESTIONS = [
-  "Koja je MOQ za vrganj sušen klasa A?",
-  "Šta sve ide u dokumentaciji za EU pošiljku?",
-  "Kako kreiram novu pošiljku iz emaila?",
-  "Šta znači status Čeka pregled?",
-];
+const QUESTIONS_BY_MODE: Record<"biznis" | "app", { label: string; questions: string[] }> = {
+  biznis: {
+    label: "Interno znanje",
+    questions: [
+      "Koja je MOQ za vrganj sušen klasa A?",
+      "Šta sve ide u dokumentaciji za EU pošiljku?",
+      "Koliko košta DAP do Münchena za 200kg?",
+      "Šta razlikuje Smrčak od konkurencije?",
+    ],
+  },
+  app: {
+    label: "Aplikacija",
+    questions: [
+      "Kako kreiram novu pošiljku iz emaila?",
+      "Šta znači status Čeka pregled?",
+      "Kako da odobrim ili odbijem dokument?",
+      "Kako pratim sledljivost lota do kooperanta?",
+    ],
+  },
+};
 
 interface Props {
   onClose: () => void;
@@ -21,6 +35,7 @@ interface Props {
 export function ChatPanel({ onClose }: Props) {
   const { messages, streaming, send, clear } = useChatStream();
   const [input, setInput] = useState("");
+  const [mode, setMode] = useState<"biznis" | "app">("biznis");
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -40,7 +55,7 @@ export function ChatPanel({ onClose }: Props) {
     if (!input.trim() || streaming) return;
     const text = input.trim();
     setInput("");
-    void send(text);
+    void send(text, mode);
   };
 
   return (
@@ -85,18 +100,45 @@ export function ChatPanel({ onClose }: Props) {
         {messages.length === 0 ? (
           <div data-test="chat-empty-state" className="space-y-3">
             <p className="text-sm text-muted-foreground">
-              Pitajte me o proizvodima, cijenama, sertifikatima ili procedurama
-              izvoza. Odgovaram iz baze znanja Smrčaka.
+              Izaberite temu razgovora pa pitajte. Odgovaram iz baze znanja Smrčaka.
             </p>
+
+            <div
+              role="tablist"
+              aria-label="Mode razgovora"
+              data-test="mode-toggle"
+              className="flex gap-1 p-1 bg-cream rounded-lg"
+            >
+              {(["biznis", "app"] as const).map((m) => (
+                <button
+                  key={m}
+                  role="tab"
+                  type="button"
+                  onClick={() => setMode(m)}
+                  data-test={`mode-${m}`}
+                  data-active={mode === m ? "true" : "false"}
+                  aria-selected={mode === m}
+                  className={cn(
+                    "flex-1 py-1.5 px-3 rounded-md text-xs font-medium transition-colors",
+                    mode === m
+                      ? "bg-card text-forest shadow-sm"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {QUESTIONS_BY_MODE[m].label}
+                </button>
+              ))}
+            </div>
+
             <div className="space-y-1.5">
               <p className="text-[11px] font-medium text-muted-foreground uppercase">
                 Predložena pitanja
               </p>
-              {QUICK_QUESTIONS.map((q) => (
+              {QUESTIONS_BY_MODE[mode].questions.map((q) => (
                 <button
                   key={q}
                   type="button"
-                  onClick={() => void send(q)}
+                  onClick={() => void send(q, mode)}
                   disabled={streaming}
                   data-test="quick-question"
                   className="w-full text-left text-sm px-3 py-2 rounded-lg border border-border bg-card hover:bg-cream/60 transition-colors disabled:opacity-50"

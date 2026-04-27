@@ -3,6 +3,8 @@
 import { useCallback, useRef, useState } from "react";
 import type { ChatMessage, ChatSource } from "./types";
 
+export type ChatScope = "biznis" | "app" | "all";
+
 interface ServerEvent {
   type: "sources" | "delta" | "done" | "error";
   sources?: ChatSource[];
@@ -20,7 +22,7 @@ export function useChatStream(endpoint = "/api/chat") {
   const abortRef = useRef<AbortController | null>(null);
 
   const send = useCallback(
-    async (text: string) => {
+    async (text: string, scope: ChatScope = "all") => {
       const trimmed = text.trim();
       if (!trimmed || streaming) return;
 
@@ -51,7 +53,7 @@ export function useChatStream(endpoint = "/api/chat") {
         const res = await fetch(endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: history }),
+          body: JSON.stringify({ messages: history, scope }),
           signal: controller.signal,
         });
         if (!res.ok || !res.body) {

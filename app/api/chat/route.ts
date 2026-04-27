@@ -20,6 +20,7 @@ import {
   RagConfigError,
   TEMPERATURE,
   buildContext,
+  buildScopeFilter,
   buildUserMessage,
   embedQuery,
   loadEnv,
@@ -27,6 +28,7 @@ import {
   searchTopK,
   SYSTEM_PROMPT,
   TOP_K,
+  type ChatScope,
   type RagSource,
 } from "@/lib/rag";
 
@@ -37,6 +39,8 @@ interface ChatMessage {
   role: "user" | "assistant";
   content: string;
 }
+
+const VALID_SCOPES: ChatScope[] = ["biznis", "app", "all"];
 
 const MAX_USER_INPUT = 4000;
 const MAX_HISTORY = 10;
@@ -56,7 +60,7 @@ function sseHeaders() {
 }
 
 export async function POST(req: NextRequest) {
-  let body: { messages?: ChatMessage[] };
+  let body: { messages?: ChatMessage[]; scope?: ChatScope };
   try {
     body = await req.json();
   } catch {
@@ -67,6 +71,8 @@ export async function POST(req: NextRequest) {
   }
 
   const messages = Array.isArray(body.messages) ? body.messages : [];
+  const scope: ChatScope =
+    body.scope && VALID_SCOPES.includes(body.scope) ? body.scope : "all";
   const lastUser = [...messages].reverse().find((m) => m.role === "user");
   if (!lastUser?.content?.trim()) {
     return new Response(
@@ -98,8 +104,14 @@ export async function POST(req: NextRequest) {
         // 1. Embed pitanja
         const queryVector = await embedQuery(openai, lastUser.content);
 
-        // 2. Pinecone top-K search
-        const sources: RagSource[] = await searchTopK(index, queryVector, TOP_K);
+        // 2. Pinecone top-K search sa scope filterom
+        const filter = buildScopeFilter(scope);
+        const sources: RagSource[] = await searchTopK(
+          index,
+          queryVector,
+          TOP_K,
+          filter,
+        );
 
         // 3. Pošalji izvore odmah (prije Claude streama)
         send({

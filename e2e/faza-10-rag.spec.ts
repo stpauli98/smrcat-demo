@@ -240,4 +240,37 @@ test.describe("Faza 10 — RAG floating chatbot", () => {
     const aiMsg = page.locator('[data-test="chat-message"][data-role="assistant"]').last();
     await expect(aiMsg).toContainText(/ne mogu odgovoriti/i);
   });
+
+  test("mode toggle switches questions and sends scope to API", async ({ page }) => {
+    let capturedBody: string | null = null;
+
+    await page.route("**/api/chat", async (route) => {
+      capturedBody = route.request().postData();
+      await mockChatRoute(route, [
+        { type: "sources", sources: [] },
+        { type: "delta", content: "OK." },
+        { type: "done" },
+      ]);
+    });
+
+    await page.goto("/");
+    await page.locator('[data-test="floating-chatbot-toggle"]').click();
+    await expect(page.locator('[data-test="mode-toggle"]')).toBeVisible();
+
+    await expect(page.locator('[data-test="mode-biznis"]')).toHaveAttribute("data-active", "true");
+    await expect(page.locator('[data-test="mode-app"]')).toHaveAttribute("data-active", "false");
+
+    await page.locator('[data-test="quick-question"]').first().click();
+    expect(capturedBody).toBeTruthy();
+    expect(JSON.parse(capturedBody!).scope).toBe("biznis");
+
+    await page.locator('[data-test="chat-clear"]').click();
+    await page.locator('[data-test="mode-app"]').click();
+    await expect(page.locator('[data-test="mode-app"]')).toHaveAttribute("data-active", "true");
+
+    capturedBody = null;
+    await page.locator('[data-test="quick-question"]').first().click();
+    expect(capturedBody).toBeTruthy();
+    expect(JSON.parse(capturedBody!).scope).toBe("app");
+  });
 });
