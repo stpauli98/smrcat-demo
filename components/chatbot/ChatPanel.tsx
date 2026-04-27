@@ -10,8 +10,8 @@ import { cn } from "@/lib/utils";
 const QUICK_QUESTIONS = [
   "Koja je MOQ za vrganj sušen klasa A?",
   "Šta sve ide u dokumentaciji za EU pošiljku?",
-  "Koliko košta DAP do Münchena za 200kg?",
-  "Šta razlikuje Smrčak od konkurencije?",
+  "Kako kreiram novu pošiljku iz emaila?",
+  "Šta znači status Čeka pregled?",
 ];
 
 interface Props {

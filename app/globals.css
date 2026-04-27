@@ -50,3 +50,24 @@
     @apply font-serif;
   }
 }
+
+@keyframes thinking-dot {
+  0%, 60%, 100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+.thinking-dots > span {
+  animation: thinking-dot 1.4s ease-in-out infinite;
+}
+.thinking-dots > span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.thinking-dots > span:nth-child(3) {
+  animation-delay: 0.4s;
+}
