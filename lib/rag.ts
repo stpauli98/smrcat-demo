@@ -9,10 +9,13 @@
 
 import OpenAI from "openai";
 import { Pinecone } from "@pinecone-database/pinecone";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 export const EMBED_MODEL = "text-embedding-3-small";
 export const CHAT_MODEL = "claude-sonnet-4-5";
 export const TOP_K = 5;
+export const TEMPERATURE = 0.3;
 
 export interface RagSource {
   source: string;
@@ -102,29 +105,16 @@ export function buildContext(sources: RagSource[]): string {
     .join("\n\n---\n\n");
 }
 
-export const SYSTEM_PROMPT = `Ti si AI asistent firme Smrčak d.o.o. iz Zvornika.
-Smrčak izvozi šumske gljive (vrganji, lisičarke, smrčci, bukovače) i šumske
-plodove (borovnice, maline) u EU — glavni kupci Njemačka, Italija, Austrija,
-Francuska, Švajcarska. BioSuisse organic certifikovani.
-
-Tvoja uloga je da pomažeš zaposlenicima Smrčaka da brzo odgovore na pitanja
-o proizvodima, cijenama, sertifikatima i procedurama izvoza.
-
-PRAVILA:
-1. Odgovaraj SAMO iz priloženog konteksta (KONTEKST sekcija).
-2. Ako informacija nije u kontekstu, reci: "Nemam tu informaciju u trenutnoj
-   bazi znanja. Kontaktirajte prodaja@smrcak.com."
-3. NIKAD ne izmišljaj cijene, MOQ, rokove, šifre proizvoda, sertifikate.
-4. Uvijek navedi izvor (naziv .md fajla iz konteksta) na kraju odgovora.
-5. Sezonalnost je VAŽNA — svježi proizvodi nisu uvijek dostupni:
-   - Smrčci: april–maj
-   - Lisičarke: jun–septembar
-   - Vrganji: jul–oktobar
-   - Šumski plodovi: ljeto
-6. Cijene su uvijek u EUR (FCA Zvornik default) osim ako nije drugačije naznačeno.
-7. Kratko, profesionalno, BCS jezik (osim ako kupac piše na drugom jeziku).
-8. Ako kupac piše na DE/IT/EN/FR — odgovori na njegovom jeziku ALI držeći se
-   konteksta iz dokumenata (tehnički podaci ostaju isti).`;
+/**
+ * System prompt učitavamo iz data/system_prompt.md da non-developer
+ * (PM, klijent, sam korisnik) može da ga mijenja bez touch-a koda.
+ * Učitava se jednom pri import-u modula i kešira u memoriji.
+ *
+ * Ako zamijeniš MD fajl + restart-uješ server, novi prompt je aktivan.
+ * Sva guardrails, role, rules, context_handling logika je u tom fajlu.
+ */
+const SYSTEM_PROMPT_PATH = join(process.cwd(), "data", "system_prompt.md");
+export const SYSTEM_PROMPT = readFileSync(SYSTEM_PROMPT_PATH, "utf-8");
 
 export function buildUserMessage(question: string, context: string): string {
   if (!context) {

@@ -18,6 +18,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import {
   CHAT_MODEL,
   RagConfigError,
+  TEMPERATURE,
   buildContext,
   buildUserMessage,
   embedQuery,
@@ -122,6 +123,7 @@ export async function POST(req: NextRequest) {
         const claudeStream = anthropic.messages.stream({
           model: CHAT_MODEL,
           max_tokens: 1024,
+          temperature: TEMPERATURE,
           system: SYSTEM_PROMPT,
           messages: [
             ...history,
