@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import { cn } from "@/lib/utils";
 import { Sparkles, User, AlertCircle } from "lucide-react";
 import { SourcesPopover } from "./SourcesPopover";
+import { ToolCallIndicator } from "./ToolCallIndicator";
 import type { ChatMessage } from "./types";
 
 const MARKDOWN_COMPONENTS = {
@@ -87,33 +88,40 @@ export function MessageBubble({ message }: { message: ChatMessage }) {
             <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
             <span>{message.error}</span>
           </div>
-        ) : message.pending && !message.content ? (
-          <div data-test="thinking-indicator" className="flex items-center gap-2 py-0.5">
-            <div className="thinking-dots flex gap-1" aria-hidden>
-              <span className="w-1.5 h-1.5 rounded-full bg-forest" />
-              <span className="w-1.5 h-1.5 rounded-full bg-forest" />
-              <span className="w-1.5 h-1.5 rounded-full bg-forest" />
-            </div>
-            <span className="text-xs text-muted-foreground italic">Razmišljam...</span>
-          </div>
         ) : (
           <>
-            <div className="text-sm" data-test="message-content">
-              {isUser ? (
-                <span className="whitespace-pre-wrap leading-relaxed">{message.content}</span>
-              ) : (
-                <ReactMarkdown components={MARKDOWN_COMPONENTS}>
-                  {message.content}
-                </ReactMarkdown>
-              )}
-              {message.pending && (
-                <span
-                  aria-hidden
-                  data-test="streaming-cursor"
-                  className="inline-block w-1.5 h-3.5 ml-0.5 bg-forest/60 animate-pulse align-middle"
-                />
-              )}
-            </div>
+            {!isUser && message.toolCalls && message.toolCalls.length > 0 && (
+              <ToolCallIndicator toolCalls={message.toolCalls} />
+            )}
+            {message.pending && !message.content && (!message.toolCalls || message.toolCalls.length === 0) ? (
+              <div data-test="thinking-indicator" className="flex items-center gap-2 py-0.5">
+                <div className="thinking-dots flex gap-1" aria-hidden>
+                  <span className="w-1.5 h-1.5 rounded-full bg-forest" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-forest" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-forest" />
+                </div>
+                <span className="text-xs text-muted-foreground italic">Razmišljam...</span>
+              </div>
+            ) : (
+              message.content && (
+                <div className="text-sm" data-test="message-content">
+                  {isUser ? (
+                    <span className="whitespace-pre-wrap leading-relaxed">{message.content}</span>
+                  ) : (
+                    <ReactMarkdown components={MARKDOWN_COMPONENTS}>
+                      {message.content}
+                    </ReactMarkdown>
+                  )}
+                  {message.pending && (
+                    <span
+                      aria-hidden
+                      data-test="streaming-cursor"
+                      className="inline-block w-1.5 h-3.5 ml-0.5 bg-forest/60 animate-pulse align-middle"
+                    />
+                  )}
+                </div>
+              )
+            )}
             {!isUser && message.sources && message.sources.length > 0 && (
               <SourcesPopover sources={message.sources} />
             )}

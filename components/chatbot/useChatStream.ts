@@ -2,14 +2,29 @@
 
 import { useCallback, useRef, useState } from "react";
 import type { ChatMessage, ChatSource } from "./types";
+import { usePersistedMessages, clearHistory } from "./useChatHistory";
 
-export type ChatScope = "biznis" | "app" | "all";
+export type ChatScope = "biznis" | "app" | "operativni" | "all";
 
 interface ServerEvent {
-  type: "sources" | "delta" | "done" | "error";
+  type:
+    | "sources"
+    | "delta"
+    | "done"
+    | "error"
+    | "tool_call_start"
+    | "tool_call_end"
+    | "tool_call_error";
   sources?: ChatSource[];
   content?: string;
   message?: string;
+  // tool_call fields
+  id?: string;
+  name?: string;
+  input?: unknown;
+  result?: unknown;
+  durationMs?: number;
+  error?: string;
 }
 
 function genId() {
@@ -17,7 +32,7 @@ function genId() {
 }
 
 export function useChatStream(endpoint = "/api/chat") {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [messages, setMessages] = usePersistedMessages();
   const [streaming, setStreaming] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
 
@@ -98,6 +113,58 @@ export function useChatStream(endpoint = "/api/chat") {
                     : m,
                 ),
               );
+            } else if (event.type === "tool_call_start") {
+              setMessages((prev) =>
+                prev.map((m) => {
+                  if (m.id !== assistantId) return m;
+                  const existing = m.toolCalls ?? [];
+                  return {
+                    ...m,
+                    toolCalls: [
+                      ...existing,
+                      {
+                        id: event.id ?? "?",
+                        name: event.name ?? "?",
+                        input: event.input,
+                        status: "running" as const,
+                      },
+                    ],
+                  };
+                }),
+              );
+            } else if (event.type === "tool_call_end") {
+              setMessages((prev) =>
+                prev.map((m) => {
+                  if (m.id !== assistantId) return m;
+                  return {
+                    ...m,
+                    toolCalls: (m.toolCalls ?? []).map((tc) =>
+                      tc.id === event.id
+                        ? {
+                            ...tc,
+                            status: "done" as const,
+                            result: event.result,
+                            durationMs: event.durationMs,
+                          }
+                        : tc,
+                    ),
+                  };
+                }),
+              );
+            } else if (event.type === "tool_call_error") {
+              setMessages((prev) =>
+                prev.map((m) => {
+                  if (m.id !== assistantId) return m;
+                  return {
+                    ...m,
+                    toolCalls: (m.toolCalls ?? []).map((tc) =>
+                      tc.id === event.id
+                        ? { ...tc, status: "error" as const, error: event.error }
+                        : tc,
+                    ),
+                  };
+                }),
+              );
             } else if (event.type === "error") {
               updateAssistant({
                 error: event.message ?? "Greška",
@@ -122,7 +189,7 @@ export function useChatStream(endpoint = "/api/chat") {
         abortRef.current = null;
       }
     },
-    [endpoint, messages, streaming],
+    [endpoint, messages, streaming, setMessages],
   );
 
   const stop = useCallback(() => {
@@ -132,7 +199,8 @@ export function useChatStream(endpoint = "/api/chat") {
   const clear = useCallback(() => {
     if (streaming) abortRef.current?.abort();
     setMessages([]);
-  }, [streaming]);
+    clearHistory();
+  }, [streaming, setMessages]);
 
   return { messages, streaming, send, stop, clear };
 }

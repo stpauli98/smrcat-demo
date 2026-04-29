@@ -77,7 +77,7 @@ export async function embedQuery(
   return r.data[0].embedding;
 }
 
-export type ChatScope = "biznis" | "app" | "all";
+export type ChatScope = "biznis" | "app" | "operativni" | "all";
 
 export const APP_DOC_FILE = "uputstvo_aplikacije.md";
 

@@ -1,36 +1,31 @@
 /**
  * POST /api/chat
  *
- * Streaming RAG endpoint sa custom SSE protokolom:
- *   data: {"type":"sources", "sources":[...]}
+ * Streaming Agent endpoint sa custom SSE protokolom:
+ *   data: {"type":"tool_call_start", "id":"...", "name":"...", "input":{...}}
+ *   data: {"type":"tool_call_end", "id":"...", "name":"...", "result":{...}, "durationMs":N}
+ *   data: {"type":"tool_call_error", "id":"...", "name":"...", "error":"..."}
+ *   data: {"type":"sources", "sources":[...]}        (extracted iz pretrazi_dokumente toolCall-a)
  *   data: {"type":"delta", "content":"..."}
  *   data: {"type":"done"}
  *   data: {"type":"error", "message":"..."}
  *
- * Klijent (FloatingChatbot) parsira ove eventove i renderuje odgovor + izvore.
+ * Klijent (FloatingChatbot) parsira ove eventove i renderuje:
+ * - tool indikatore (Faza 12)
+ * - sources popover ispod AI poruke
+ * - finalni tekst odgovora
  *
- * Skalabilnost: kad dolaze pravi podaci, samo se mijenjaju MD fajlovi
- * u data/dokumenti/ + pokreće `npm run ingest`. Nema promjena u ovom fajlu.
+ * Per-mode allowedTools:
+ * - "operativni" / "all" — svi alati dostupni
+ * - "biznis" / "app" — samo pretrazi_dokumente (RAG-only fallback)
  */
 
 import { NextRequest } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import {
-  CHAT_MODEL,
-  RagConfigError,
-  TEMPERATURE,
-  buildContext,
-  buildScopeFilter,
-  buildUserMessage,
-  embedQuery,
-  loadEnv,
-  makeClients,
-  searchTopK,
-  SYSTEM_PROMPT,
-  TOP_K,
-  type ChatScope,
-  type RagSource,
-} from "@/lib/rag";
+import type { MessageParam } from "@anthropic-ai/sdk/resources/messages";
+import { runAgent } from "@/lib/agent/runner";
+import type { SseEvent, SourceEvent } from "@/lib/agent/types";
+import { RagConfigError, SYSTEM_PROMPT, loadEnv, type ChatScope } from "@/lib/rag";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -40,14 +35,13 @@ interface ChatMessage {
   content: string;
 }
 
-const VALID_SCOPES: ChatScope[] = ["biznis", "app", "all"];
-
+const VALID_SCOPES: ChatScope[] = ["biznis", "app", "operativni", "all"];
 const MAX_USER_INPUT = 4000;
 const MAX_HISTORY = 10;
 
 function sseEncoder() {
   const encoder = new TextEncoder();
-  return (event: unknown) => encoder.encode(`data: ${JSON.stringify(event)}\n\n`);
+  return (event: SseEvent) => encoder.encode(`data: ${JSON.stringify(event)}\n\n`);
 }
 
 function sseHeaders() {
@@ -64,10 +58,10 @@ export async function POST(req: NextRequest) {
   try {
     body = await req.json();
   } catch {
-    return new Response(
-      JSON.stringify({ error: "Invalid JSON body" }),
-      { status: 400, headers: { "Content-Type": "application/json" } },
-    );
+    return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
   const messages = Array.isArray(body.messages) ? body.messages : [];
@@ -82,9 +76,7 @@ export async function POST(req: NextRequest) {
   }
   if (lastUser.content.length > MAX_USER_INPUT) {
     return new Response(
-      JSON.stringify({
-        error: `Question too long (max ${MAX_USER_INPUT} chars)`,
-      }),
+      JSON.stringify({ error: `Question too long (max ${MAX_USER_INPUT} chars)` }),
       { status: 413, headers: { "Content-Type": "application/json" } },
     );
   }
@@ -93,62 +85,62 @@ export async function POST(req: NextRequest) {
 
   const stream = new ReadableStream({
     async start(controller) {
-      const send = (event: unknown) => controller.enqueue(encode(event));
+      const send = (event: SseEvent) => controller.enqueue(encode(event));
       const close = () => controller.close();
 
       try {
         const env = loadEnv();
-        const { openai, index } = makeClients(env);
         const anthropic = new Anthropic({ apiKey: env.anthropicKey });
 
-        // 1. Embed pitanja
-        const queryVector = await embedQuery(openai, lastUser.content);
-
-        // 2. Pinecone top-K search sa scope filterom
-        const filter = buildScopeFilter(scope);
-        const sources: RagSource[] = await searchTopK(
-          index,
-          queryVector,
-          TOP_K,
-          filter,
-        );
-
-        // 3. Pošalji izvore odmah (prije Claude streama)
-        send({
-          type: "sources",
-          sources: sources.map((s) => ({
-            source: s.source,
-            score: Number(s.score.toFixed(3)),
-            chunkIndex: s.chunkIndex,
-            preview: s.text.slice(0, 220),
-          })),
-        });
-
-        // 4. Build kontekst i Claude poziv
-        const context = buildContext(sources);
-        const history = messages
-          .slice(-MAX_HISTORY - 1, -1)
+        // History za Claude (max 10 ranijih poruka)
+        const history: MessageParam[] = messages
+          .slice(-MAX_HISTORY - 1)
           .filter((m) => m.role === "user" || m.role === "assistant")
           .map((m) => ({ role: m.role, content: m.content }));
 
-        const userMessage = buildUserMessage(lastUser.content, context);
-        const claudeStream = anthropic.messages.stream({
-          model: CHAT_MODEL,
-          max_tokens: 1024,
-          temperature: TEMPERATURE,
-          system: SYSTEM_PROMPT,
-          messages: [
-            ...history,
-            { role: "user", content: userMessage },
-          ],
+        // Prosljedi scope kao hint zadnjeg pitanja (agent može pozvati pretrazi_dokumente sa scope)
+        const lastMessage = history[history.length - 1];
+        if (lastMessage && lastMessage.role === "user") {
+          const original = typeof lastMessage.content === "string" ? lastMessage.content : "";
+          lastMessage.content = `[Mode: ${scope}] ${original}`;
+        }
+
+        // Per-mode allowedTools
+        // operativni i all — svi alati; biznis i app — samo pretrazi_dokumente (RAG-only)
+        const allowedTools =
+          scope === "biznis" || scope === "app" ? ["pretrazi_dokumente"] : undefined;
+
+        const result = await runAgent({
+          anthropic,
+          systemPrompt: SYSTEM_PROMPT,
+          history,
+          emit: send,
+          allowedTools,
         });
 
-        for await (const event of claudeStream) {
-          if (
-            event.type === "content_block_delta" &&
-            event.delta.type === "text_delta"
-          ) {
-            send({ type: "delta", content: event.delta.text });
+        // Izvuci sources iz pretrazi_dokumente tool call-ova i pošalji UI-u
+        const ragCalls = result.toolCalls.filter((tc) => tc.name === "pretrazi_dokumente");
+        if (ragCalls.length > 0) {
+          const allSources: SourceEvent[] = ragCalls.flatMap((tc) => {
+            const r = tc.result as {
+              uspjeh?: boolean;
+              izvori?: Array<{
+                source: string;
+                score: number;
+                chunk_index: number;
+                text: string;
+              }>;
+            };
+            if (!r.uspjeh || !r.izvori) return [];
+            return r.izvori.map((s) => ({
+              source: s.source,
+              score: s.score,
+              chunkIndex: s.chunk_index,
+              preview: s.text.slice(0, 220),
+            }));
+          });
+          if (allSources.length > 0) {
+            send({ type: "sources", sources: allSources });
           }
         }
 
